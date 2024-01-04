@@ -413,12 +413,14 @@ function Mining({ nodeUrl, nodePort, indexerPort, indexerUrl, applicationId, ass
 
     const diffSeconds = diff - (diff % 1000);
 
+    const TXN_PER_MINUTE_MAX_LIMIT = 40
+
     useEffect(() => {
         let interval = 0;
         if (mining && diffSeconds < 0) {
             toast.loading(`Juicing will start in ${Math.abs(diffSeconds / 1000)} seconds!`, { duration: 1000 });
         } else if (mining && activeAccount && assetData && assetData.lastMiner) {
-            interval = setInterval(() => mine(tpm > 60 ? 60 : tpm, fpt, activeAccount.address, address, assetData.lastMiner), 1000);
+            interval = setInterval(() => mine(tpm > TXN_PER_MINUTE_MAX_LIMIT ? TXN_PER_MINUTE_MAX_LIMIT : tpm, fpt, activeAccount.address, address, assetData.lastMiner), 1000);
         }
         if (!mining) {
             setMined(0);
@@ -608,7 +610,7 @@ function Mining({ nodeUrl, nodePort, indexerPort, indexerUrl, applicationId, ass
                                         <Slider
                                             name="Transactions per minute"
                                             min={6}
-                                            max={60}
+                                            max={TXN_PER_MINUTE_MAX_LIMIT}
                                             value={tpm}
                                             ticker={`TPM (${formatAmount(tpm / 60, 0)} TPS)`}
                                             onChange={setTpm}
