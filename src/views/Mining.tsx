@@ -79,7 +79,7 @@ function Mining({ nodeUrl, nodePort, indexerPort, indexerUrl, applicationId, ass
     const [accountData, setAccountData] = useState<AccountData>({ assetBalance: 0, effort: 0 });
     const [assetData, setAssetData] = useState<AssetData>();
 
-    const [tpm, setTpm] = useState(60);
+    const [tpm, setTpm] = useState(20);
     const [fpt, setFpt] = useState(2000);
 
     const [mining, setMining] = useState(false);
@@ -592,7 +592,7 @@ function Mining({ nodeUrl, nodePort, indexerPort, indexerUrl, applicationId, ass
                                 </span>
                             </div>
                         )}
-                        {isMainnet ? (
+                        {false ? (
                             <div className="flex w-56 font-bold text-sm bg-red-400 rounded-lg p-2 text-center">
                                 Frontend juicing is disabled to give important Algorand infrastructure (like indexers)
                                 time to upgrade. It will come back soon! ORA still works when being mined through your
@@ -608,7 +608,7 @@ function Mining({ nodeUrl, nodePort, indexerPort, indexerUrl, applicationId, ass
                                         <Slider
                                             name="Transactions per minute"
                                             min={6}
-                                            max={7680}
+                                            max={60}
                                             value={tpm}
                                             ticker={`TPM (${formatAmount(tpm / 60, 0)} TPS)`}
                                             onChange={setTpm}
@@ -666,6 +666,7 @@ function Mining({ nodeUrl, nodePort, indexerPort, indexerUrl, applicationId, ass
                                 >
                                     {mining ? 'Stop' : 'Start'} juicing
                                 </Button>
+                                {accountData.appOptedIn}
                             </div>
                         )}
                     </div>
