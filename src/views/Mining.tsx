@@ -418,7 +418,7 @@ function Mining({ nodeUrl, nodePort, indexerPort, indexerUrl, applicationId, ass
         if (mining && diffSeconds < 0) {
             toast.loading(`Juicing will start in ${Math.abs(diffSeconds / 1000)} seconds!`, { duration: 1000 });
         } else if (mining && activeAccount && assetData && assetData.lastMiner) {
-            interval = setInterval(() => mine(tpm, fpt, activeAccount.address, address, assetData.lastMiner), 1000);
+            interval = setInterval(() => mine(tpm > 60 ? 60 : tpm, fpt, activeAccount.address, address, assetData.lastMiner), 1000);
         }
         if (!mining) {
             setMined(0);
